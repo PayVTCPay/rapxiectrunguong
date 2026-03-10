@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Website Liên đoàn xiếc Việt Nam - Darkmode</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        /* Nền đen cho toàn bộ trang */
+        background-color: #000000;
+        /* Cho phép cuộn dọc */
+        overflow-x: hidden;
+      }
+
+      #slide-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Căn giữa ảnh theo chiều ngang */
+        min-height: 100vh;
+        width: 100%;
+      }
+
+      img {
+        /* Chiếm 80% chiều ngang màn hình */
+        width: 50%;
+        height: auto;
+        /* Tạo khoảng cách trên dưới một chút cho thoáng (tùy chọn) */
+        display: block;
+        /* Đảm bảo ảnh sắc nét */
+        object-fit: contain;
+      }
+
+      #page-info {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 5px;
+        font-family: sans-serif;
+        pointer-events: none; /* Không cản trở việc click */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="page-info">1 / 5</div>
+    <div id="slide-container">
+      <img id="current-slide" src="" alt="Slide" />
+    </div>
+
+    <script>
+      // --- PHẦN JAVASCRIPT ---
+
+      // 1. Khai báo danh sách đường dẫn ảnh (thay tên file của bạn vào đây)
+      const images = [
+        "./images/homepage2.png",
+        "./images/Giới thiệu.png",
+        "./images/Đặt vé 1.png",
+        "./images/Đặt vé 2.png",
+        "./images/Đặt vé 3.png",
+        "./images/Đặt vé 4.png",
+        "./images/checkin.png",
+      ];
+
+      let currentIndex = 0;
+      const slideImg = document.getElementById("current-slide");
+      const pageInfo = document.getElementById("page-info");
+      // 2. Hàm hiển thị ảnh
+      function updateSlide() {
+        slideImg.src = images[currentIndex];
+        pageInfo.innerText = currentIndex + 1 + " / " + images.length;
+
+        // Tự động cuộn lên đầu trang mỗi khi chuyển sang ảnh mới
+        window.scrollTo(0, 0);
+      }
+
+      // Khởi tạo ảnh đầu tiên
+      updateSlide();
+
+      // 3. Bắt sự kiện bàn phím
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowRight") {
+          // Sang ảnh tiếp theo
+          currentIndex = (currentIndex + 1) % images.length;
+          updateSlide();
+        } else if (event.key === "ArrowLeft") {
+          // Quay lại ảnh trước
+          currentIndex = (currentIndex - 1 + images.length) % images.length;
+          updateSlide();
+        }
+      });
+    </script>
+  </body>
+</html>
